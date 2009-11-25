@@ -1,7 +1,0 @@
-CREATE TABLE Post(
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    amount DOUBLE NOT NULL,
-    amountType BOOLEAN,
-    description VARCHAR(140) NOT NULL,
-    createTime TIMESTAMP
-);
