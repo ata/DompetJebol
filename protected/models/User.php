@@ -3,12 +3,13 @@
 class User extends CActiveRecord
 {
 	/**
-	 * The followings are the available columns in table 'users':
+	 * The followings are the available columns in table 'User':
 	 * @var double $id
 	 * @var string $username
 	 * @var string $email
 	 * @var string $password
 	 * @var string $fullname
+	 * @var double $balance
 	 */
 
 	/**
@@ -25,7 +26,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'users';
+		return 'User';
 	}
 
 	/**
@@ -38,7 +39,8 @@ class User extends CActiveRecord
 			array('email','length','max'=>255),
 			array('password','length','max'=>255),
 			array('fullname','length','max'=>255),
-			array('username, email, password, fullname', 'required'),
+			array('username, email, password, fullname, balance', 'required'),
+			array('balance', 'numerical'),
 		);
 	}
 
@@ -64,6 +66,7 @@ class User extends CActiveRecord
 			'email' => 'Email',
 			'password' => 'Password',
 			'fullname' => 'Fullname',
+			'balance' => 'Balance',
 		);
 	}
 }

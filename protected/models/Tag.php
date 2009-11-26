@@ -1,16 +1,12 @@
 <?php
 
-class Post extends CActiveRecord
+class Tag extends CActiveRecord
 {
 	/**
-	 * The followings are the available columns in table 'Post':
+	 * The followings are the available columns in table 'Tag':
 	 * @var double $id
-	 * @var double $userId
-	 * @var double $amount
-	 * @var integer $amountType
-	 * @var string $description
-	 * @var string $createTime
-	 * @var string $updateTime
+	 * @var string $name
+	 * @var double $postCount
 	 */
 
 	/**
@@ -27,7 +23,7 @@ class Post extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Post';
+		return 'Tag';
 	}
 
 	/**
@@ -36,10 +32,9 @@ class Post extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('description','length','max'=>140),
-			array('userId, amount, amountType, description, createTime, updateTime', 'required'),
-			array('amountType', 'numerical', 'integerOnly'=>true),
-			array('userId, amount', 'numerical'),
+			array('name','length','max'=>255),
+			array('name, postCount', 'required'),
+			array('postCount', 'numerical'),
 		);
 	}
 
@@ -61,12 +56,8 @@ class Post extends CActiveRecord
 	{
 		return array(
 			'id' => 'Id',
-			'userId' => 'User',
-			'amount' => 'Amount',
-			'amountType' => 'Amount Type',
-			'description' => 'Description',
-			'createTime' => 'Create Time',
-			'updateTime' => 'Update Time',
+			'name' => 'Name',
+			'postCount' => 'Post Count',
 		);
 	}
 }
