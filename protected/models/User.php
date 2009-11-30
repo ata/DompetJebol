@@ -10,7 +10,14 @@ class User extends CActiveRecord
 	 * @var string $password
 	 * @var string $fullname
 	 * @var double $balance
+	 * @var string $verifyCode
+	 * @var integer $verified
+	 * @var string $createTime
+	 * @var string $updateTime
 	 */
+	public $verificationCode;
+	public $verificationPassword;
+	
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -38,9 +45,15 @@ class User extends CActiveRecord
 			array('username','length','max'=>255),
 			array('email','length','max'=>255),
 			array('password','length','max'=>255),
+			array('verificationPassword','length','max'=>255),
 			array('fullname','length','max'=>255),
-			array('username, email, password, fullname, balance', 'required'),
+			array('verifyCode','length','max'=>255),
+			array('fullname, username, email, password, verificationPassword, balance', 'required'),
+			array('verified', 'numerical', 'integerOnly'=>true),
 			array('balance', 'numerical'),
+			array('email','email'),
+			array('password','compare','compareAttribute'=> 'verificationPassword','on'=>'register'),
+			array('verificationCode','captcha', 'allowEmpty'=>!extension_loaded('gd')),
 		);
 	}
 
@@ -54,6 +67,18 @@ class User extends CActiveRecord
 		return array(
 		);
 	}
+	/*
+	public function beforeSave()
+	{
+		if($this->getIsNewRecord()){
+			$user->password = md5($user->password . Yii::app()->params['salt']);
+			$user->createTime = date(DATE_ISO8601);
+			$user->verifyCode = sha1($user->email . $user->createTime . Yii::app()->params['salt']);
+		} else {
+			$user->updateTime = date(DATE_ISO8601);
+		}
+	}
+	*/
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -65,8 +90,13 @@ class User extends CActiveRecord
 			'username' => 'Username',
 			'email' => 'Email',
 			'password' => 'Password',
-			'fullname' => 'Fullname',
-			'balance' => 'Balance',
+			'fullname' => 'Full Name',
+			'balance' => 'Initial Balance',
+			'verifyCode' => 'Verify Code',
+			'verified' => 'Verified',
+			'createTime' => 'Create Time',
+			'updateTime' => 'Update Time',
+			'verificationPassword'=>'Verification Password',
 		);
 	}
 }
